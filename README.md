@@ -1,77 +1,33 @@
-# AngularDemo
+# Zorgplanning
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+## Hoe de app te starten
+Met het commando `nx serve zorgplanning`
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+## Library structuur
+Ik heb drie feature libs, namelijk `feature-clients-dashboard`, `feature-client-details` en `feature-form-care-moment`. Ik heb gekozen voor deze drie feature libs, want dit zijn de hoofdonderdelen van de app. Je komt binnen op het dashboard, hier zie je een rij cliënten. Als je op een cliënt klikt ga je naar het detailsscherm. Hier zie je ook de zorgmomenten en is het mogelijk om een zorgmoment toe te voegen via het formulier.
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+Ik heb er ook voor gekozen om een data-service lib te maken met hierin een data service, modellen en de validatatie. Ik heb er voor gekozen om deze hier ook in te doen, omdat ze alles te maken hebben met de data. Ik heb geen data services in de feature libs, hoewel dit wel in het document stond. Ik vind het wel handig om alle data op 1 plek te hebben.
 
-## Run tasks
+Daarnaast heb ik nog een `ui-components` lib met hierin de gedeelde ui componenten. Dit zijn `button-component`, `client-card-component`, `input-component`, `list-care-moments`, `page-header-component` en `select-component`. Ik heb voor deze components gekozen, omdat dit components zijn die vaker gebruikt kunnen worden.
 
-To run the dev server for your app, use:
+## User-stories
 
-```sh
-npx nx serve angular-demo
-```
+### 1. Overzicht cliënten bekijken (Dashboard)
+Je ziet als je de app opstart een overzicht van alle cliënten, op cliëntkaarten. Op een kaart staan de naam van de Cliënt, de geboortenaam en de naam van de contactpersoon. Als je er op klikt kom je in het detailscherm.
 
-To create a production bundle:
+### 2. Cliëntdetails en geplande zorgmomenten bekijken
+Boven het detailsscherm staan dezelfde gegevens nog een keer van de gekozen cliënt. Hier zouden natuurlijk meer details bij kunnen staan. Hieronder staan de geplande zorgmomenten in een tabel. In elke rij staan voor dat zorgmoment de datum wanneer het plaatsvinden moet, het type zorg, de naam van de zorgverlener en de datum wanneer het toegevoegd is.
 
-```sh
-npx nx build angular-demo
-```
+### 3. Nieuw zorgmoment inplannen
+Op het detailscherm is het ook mogelijk op de link "Voeg een zorgmoment toe" te klikken om een modal te openen waarin een formulier staat om een zorgmoment toe te voegen. Dit formulier heeft de velden Datum, een native date input veld. Tijd, het lijkt me dat een zorgmoment ook een tijd nodig heeft. Ik heb dit apart gedaan om het duidelijk te maken voor de gebruiker en ik heb er voor gerkozen om deze niet verplicht te maken, zodat ook alleen een zorgmoment op datum kan ingevoerd worden. Type zorg, een text-input, dit zou ook een select kunnen zijn, als het om vaste types gaat, maar die informatie heb ik niet, dus heb ik gekozen voor vrije invoer. Zorgverlener, dit is een select geworden. Hier heb ik voor gekozen zodat gebruikers ook geen type fouten kunnen maken en als ze een naam niet zeker weten kunnen ze kijken of deze persoon er tussen staat.
 
-To see all available targets to run for a project, run:
+Er zit validatie op, behalve tijd, zal er een melding verschijnen bij de velden als ze niet ingevuld zijn. Dit geldt ook als de datum in het verleden ligt. De validatie verschijnt pas bij het verzenden van het formulier, zodat gebruikers het rustig kunnen invullen zonder direct in de stress te schieten.
 
-```sh
-npx nx show project angular-demo
-```
+Als een zorgmoment wordt toegevoegd, staat het meteen tussen de anderen in de lijst.
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+### 4. Validatie & feedback
+Als er iets niet klopt bij het verzenden van het formulier komt er eenm bericht bij het veld te staan wat er niet klopt. Als het verplicht is om iets in te voeren, en dit is niet gedaan bij een veld, komt de melding "Dit veld moet verplicht ingevuld worden." er bij te staan. Als de datum in het verleden ligt, komt de melding te staan "De datum mag niet in het verleden liggen." Dit zijn duidelijke aanwijzingen waarmee de gebruiker snel weet wat hij/zij moet doen om het toch valide te maken.
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Add new projects
-
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
-
-Use the plugin's generator to create new projects.
-
-To generate a new application, use:
-
-```sh
-npx nx g @nx/angular:app demo
-```
-
-To generate a new library, use:
-
-```sh
-npx nx g @nx/angular:lib mylib
-```
-
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
-
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+### 5. Sorteren/filteren
+Het is mogelijk de lijst met zorgmomenten te sorteren op Datum afspraak, Zorgtype, Zorgverlener en datum toegevoegd. In beide richtingen. Ik heb datum toegevoegd er bijgezet, omdat in de user story staat "Als zorgverlener wil ik zorgmomenten kunnen sorteren op datum,
+zodat nieuwe afspraken overzichtelijk bovenaan staan." en dit is niet mogelijk met de datum afspraak. Deze heb ik wel als default sortering gedaan, want het lijkt me logisch dat de gebruiker wil zien wat de het volgende zorgmoment is, maar zo is het ook mogelijk om de laatst toegevoegde bovenaan te zien.

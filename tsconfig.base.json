@@ -14,7 +14,21 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@zorgplanning/ui-components": ["libs/ui-components/src/index.ts"],
+      "@zorgplanning/models": ["libs/data-service/models/index.ts"],
+      "@zorgplanning/data": ["libs/data-service/data.ts"],
+      "@zorgplanning/feature-client-details": [
+        "libs/feature-client-details/src/index.ts"
+      ],
+      "@zorgplanning/feature-clients-dashboard": [
+        "libs/feature-clients-dashboard/src/index.ts"
+      ],
+      "@zorgplanning/feature-form-care-moment": [
+        "libs/feature-form-care-moment/src/index.ts"
+      ],
+      "@zorgplanning/validators": ["libs/data-service/validators/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
