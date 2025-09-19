@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CareMomentClass, ClientClass, ContactClass, CarerClass } from "@zorgplanning/models";
+import { CareMoment, CareMomentClass, Client, ClientClass, Contact, ContactClass, Carer, CarerClass } from "@zorgplanning/models";
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 
 export class Data {
-  clients = [
+  clients: Client[] = [
     new ClientClass( 'client-1', 'Bea', 'Janssen', '1964-05-14', 'contact-1' ),
     new ClientClass( 'client-2', 'Jan', 'de Boer', '1982-01-01', 'contact-2' ),
     new ClientClass( 'client-3', 'Lea', 'Smid', '1975-02-02', 'contact-3' ),
@@ -25,7 +25,7 @@ export class Data {
     new ClientClass( 'client-15', 'Adam', 'Nooitgedacht', '1971-05-22', 'contact-12' ),
   ];
 
-  contacts = [
+  contacts: Contact[] = [
     new ContactClass('contact-1', 'Kees', 'Bergstra'),
     new ContactClass('contact-2', 'Bram', 'Terpstra'),
     new ContactClass('contact-3', 'Ben', 'Hoes'),
@@ -41,7 +41,7 @@ export class Data {
     new ContactClass('contact-13', 'Enzo', 'Tevreden'),
   ];
 
-  careMoments: CareMomentClass[] = [
+  careMoments: CareMoment[] = [
     new CareMomentClass('care-moment-1', 'client-1', 'Bloeddruk opnemen', 'carer-1', '2025-10-01', '10:00', new Date('2025-08-08T09:00:00')),
     new CareMomentClass('care-moment-2', 'client-2', 'Gewicht meten', 'carer-2', '2025-10-02', '11:00', new Date('2025-09-15T13:16:00')),
     new CareMomentClass('care-moment-3', 'client-3', 'Consultatie', 'carer-3', '2025-10-03', '12:00', new Date('2025-07-23T15:45:00')),
@@ -63,10 +63,10 @@ export class Data {
   ];
 
   // Reactive stream for care moments so UI can subscribe and update on change
-  private readonly careMomentsSubject = new BehaviorSubject<CareMomentClass[]>([...this.careMoments]);
+  private readonly careMomentsSubject = new BehaviorSubject<CareMoment[]>([...this.careMoments]);
   readonly careMoments$ = this.careMomentsSubject.asObservable();
 
-  carers = [
+  carers: Carer[] = [
     new CarerClass('carer-1', 'Elisabeth', 'Bruinstra'),
     new CarerClass('carer-2', 'Charles', 'De Cock'),
     new CarerClass('carer-3', 'Harry', 'Handel'),
@@ -74,31 +74,27 @@ export class Data {
     new CarerClass('carer-5', 'Willem', 'van Oorschot')
   ];
 
-  getClientById(id: string) {
+  getClientById(id: string): Client | undefined {
     return this.clients.find(client => client.id === id);
   }
 
-  getContactById(id?: string) {
+  getContactById(id?: string): Contact | undefined {
     if (!id) {
       return undefined;
     }
     return this.contacts.find(contact => contact.id === id);
   }
 
-  getCarerById(id?: string) {
+  getCarerById(id?: string): Carer | undefined {
     if (!id) {
       return undefined;
     }
     return this.carers.find(carer => carer.id === id);
   }
 
-  careMomentsForClient(client: string) {
+  careMomentsForClient(client: string): CareMoment[] {
     const careMomentsForClient = this.careMoments
       .filter(careMoment => careMoment.client === client)
-      .map(careMoment => {
-        careMoment.carer = this.getCarerById(careMoment.carer)?.firstNames + ' ' + this.getCarerById(careMoment.carer)?.lastName;
-        return careMoment;
-      });
     return careMomentsForClient;
   }
 

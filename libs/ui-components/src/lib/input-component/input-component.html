@@ -12,8 +12,7 @@
   </label>
   <input
     class="input__field"
-    [ngClass]="{ 'input__field--wide': this.width === 'wide' }"
-    [ngClass]="{ 'input__field--validate': this.showValidation }"
+    [ngClass]="[this.width === 'wide' ? 'input__field--wide' : '',  this.showValidation ? 'input__field--validate' : '']"
     [id]="this._elementId"
     [name]="this.name"
     [type]="this.type"

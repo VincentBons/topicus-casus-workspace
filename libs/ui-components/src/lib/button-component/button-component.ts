@@ -8,7 +8,6 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./button-component.scss'],
 })
 export class ButtonComponent {
-  @Input() label = '';
   @Input() type = 'button';
   @Input() disabled = false;
   @Input() submitFunction: () => void = () => {};
